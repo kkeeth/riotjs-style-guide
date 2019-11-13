@@ -2,7 +2,7 @@
 
 Opinionated *RiotJS Style Guide* for all developers.
 
-[![RiotJS Style Guide badge](https://cdn.rawgit.com/k-kuwahara/riotjs-style-guide/master/riotjs-style-guide.svg)](https://github.com/k-kuwahara/riotjs-style-guide)
+[![RiotJS Style Guide badge](https://github.com/k-kuwahara/riotjs-style-guide/blob/master/riotjs-style-guide.svg)](https://github.com/k-kuwahara/riotjs-style-guide)
 
 
 ## Purpose
@@ -869,7 +869,7 @@ Note: JSHint does not accept `tag.html` as extension, but only `html`.
 
 You can use the *RiotJS Style Guide badge* to link to this guide:
 
-[![RiotJS Style Guide badge](https://cdn.rawgit.com/k-kuwahara/riotjs-style-guide/master/riotjs-style-guide.svg)](https://github.com/k-kuwahara/riotjs-style-guide)
+[![RiotJS Style Guide badge](https://github.com/k-kuwahara/riotjs-style-guide/blob/master/riotjs-style-guide.svg)](https://github.com/k-kuwahara/riotjs-style-guide)
 
 ### Why?
 
@@ -880,7 +880,7 @@ Inform other developers your project is following the RiotJS Style Guide. And le
 Include the badge in your project. In markdown:
 
 ```markdown
-[![RiotJS Style Guide badge](https://cdn.rawgit.com/k-kuwahara/riotjs-style-guide/master/riotjs-style-guide.svg)](https://github.com/k-kuwahara/riotjs-style-guide)
+[![RiotJS Style Guide badge](https://github.com/k-kuwahara/riotjs-style-guide/blob/master/riotjs-style-guide.svg)](https://github.com/k-kuwahara/riotjs-style-guide)
 ```
 
 Or html:
@@ -888,7 +888,7 @@ Or html:
 ```html
 <a href="https://github.com/k-kuwahara/riotjs-style-guide">
     <img alt="RiotJS Style Guide badge"
-    	 src="https://cdn.rawgit.com/k-kuwahara/riotjs-style-guide/master/riotjs-style-guide.svg">
+        src="https://github.com/k-kuwahara/riotjs-style-guide/blob/master/riotjs-style-guide.svg">
 </a>
 ```
 
