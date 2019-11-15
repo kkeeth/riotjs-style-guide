@@ -61,7 +61,7 @@ If your module does too much or gets too big, split it up into smaller modules w
 As a rule of thumb, try to keep each tag file less than 100 lines of code.
 Also ensure your tag module works in isolation. For instance by adding a stand-alone demo.
 
-**Tip**: If you use an [AMD](https://github.com/amdjs/amdjs-api/blob/master/AMD.md) or CommonJS module loader, you need to [compile your tags using the `--modular` (`-m`) flag](http://riotjs.com/guide/compiler/#amd-and-commonjs):
+**Tip**: If you use an [AMD](https://github.com/amdjs/amdjs-api/blob/master/AMD.md) or CommonJS module loader, you need to [compile your tags using the `--modular` (`-m`) flag](http://riot.js.org/guide/compiler/#amd-and-commonjs):
 ```bash
 # enable AMD and CommonJS
 riot --modular
@@ -158,12 +158,12 @@ However in essence these tags are simply custom elements containing markup. Ther
 
 ### How?
 
-In case of [in-browser compilation](http://riotjs.com/guide/compiler/#in-browser-compilation):
+In case of [in-browser compilation](http://riot.js.org/guide/compiler/#in-browser-compilation):
 ```html
 <script src="path/to/modules/my-example/my-example.tag.html" type="riot/tag"></script>
 ```
 
-In case of [pre-compilation](http://riotjs.com/guide/compiler/#pre-compilation), set the [custom extension](http://riotjs.com/guide/compiler/#custom-extension):
+In case of [pre-compilation](http://riot.js.org/guide/compiler/#pre-compilation), set the [custom extension](http://riot.js.org/guide/compiler/#custom-extension):
 ```bash
 riot --ext tag.html modules/ dist/tags.js
 ```
@@ -178,7 +178,7 @@ In case you're using the [Webpack tag loader](https://github.com/srackham/tag-lo
 
 ## Use `<script>` inside tag
 
-While Riot supports writing JavaScript inside a tag element [without a `<script>`](http://riotjs.com/guide/#no-script-tag),
+While Riot supports writing JavaScript inside a tag element [without a `<script>`](http://riot.js.org/guide/#no-script-tag),
 you should **always use `<script>`** around scripting. This is closer to web standards and prevents confusing developers and IDEs.
 
 ### Why?
@@ -212,7 +212,7 @@ you should **always use `<script>`** around scripting. This is closer to web sta
 
 ## Keep tag expressions simple
 
-Riot's inline [expressions](http://riotjs.com/guide/#expressions) are 100% Javascript. This makes them extemely powerful, but potentially also very complex. Therefore you should **keep tag expressions simple**.
+Riot's inline [expressions](http://riot.js.org/guide/#expressions) are 100% Javascript. This makes them extemely powerful, but potentially also very complex. Therefore you should **keep tag expressions simple**.
 
 ### Why?
 
@@ -312,7 +312,7 @@ Harnessing your tag options ensures your tag will always function (defensive pro
 * Use type conversion to cast option values to expected type.
 * Check if option exists before using it.
 
-For instance [Riot's `<todo>` example](http://riotjs.com/guide/#example) could be improved to also work if no `items` are provided, by using a default:
+For instance [Riot's `<todo>` example](http://riot.js.org/guide/#example) could be improved to also work if no `items` are provided, by using a default:
 
 ```javascript
 this.items = opts.items || []; // default to empty list
@@ -357,12 +357,12 @@ Ensuring different use cases all work:
 
 ## Assign `this` to `tag`
 
-Within the context of a Riot tag element, `this` is bound to the [tag instance](http://riotjs.com/api/#tag-instance).
+Within the context of a Riot tag element, `this` is bound to the [tag instance](http://riot.js.org/api/#tag-instance).
 Therefore when you need to reference it in a different context, ensure `this` is available as `tag`.
 
 ### Why?
 
-* By assigning `this` to a variable named `tag` the variable tells developers it's bound to the [tag instance](http://riotjs.com/api/#tag-instance) wherever it's used.
+* By assigning `this` to a variable named `tag` the variable tells developers it's bound to the [tag instance](http://riot.js.org/api/#tag-instance) wherever it's used.
 
 ### How?
 
@@ -467,7 +467,7 @@ tag.on('update', onUpdate);
 
 ## Avoid fake ES6 syntax
 
-Riot supports a [shorthand *ES6 like* method syntax](http://riotjs.com/guide/#tag-syntax). Riot compiles the shorthand syntax `methodName() { }` into `this.methodName = function() {}.bind(this)`. Since this is non-standard you should **avoid fake ES6 method shorthand syntax**.
+Riot supports a [shorthand *ES6 like* method syntax](http://riot.js.org/guide/#tag-syntax). Riot compiles the shorthand syntax `methodName() { }` into `this.methodName = function() {}.bind(this)`. Since this is non-standard you should **avoid fake ES6 method shorthand syntax**.
 
 ### Why?
 
@@ -503,7 +503,7 @@ add() {
 }
 ```
 
-**Tip**: [Disable transformation of the fake ES6 syntax](http://riotjs.com/guide/compiler/#no-transformation) during pre-compilation by setting `type` to `none`:
+**Tip**: [Disable transformation of the fake ES6 syntax](http://riot.js.org/guide/compiler/#no-transformation) during pre-compilation by setting `type` to `none`:
 
 ```bash
 riot --type none
@@ -514,9 +514,9 @@ riot --type none
 
 ## Avoid `tag.parent`
 
-Riot supports [nested tags](http://riotjs.com/guide/#nested-tags) which have access to their parent context through `tag.parent`. Accessing context outside your tag module violates the [FIRST](https://addyosmani.com/first/) rule of [module based development](#module-based-development). Therefore you should **avoid using `tag.parent`**.
+Riot supports [nested tags](http://riot.js.org/guide/#nested-tags) which have access to their parent context through `tag.parent`. Accessing context outside your tag module violates the [FIRST](https://addyosmani.com/first/) rule of [module based development](#module-based-development). Therefore you should **avoid using `tag.parent`**.
 
-The exception to this rule are anonymous child tags in a [for each loop](http://riotjs.com/guide/#loops) as they are defined directly inside the tag module.
+The exception to this rule are anonymous child tags in a [for each loop](http://riot.js.org/guide/#loops) as they are defined directly inside the tag module.
 
 ### Why?
 
@@ -585,7 +585,7 @@ The exception to this rule are anonymous child tags in a [for each loop](http://
 
 ## Use `each ... in` syntax
 
-Riot supports multiple notations for [loops](http://riotjs.com/guide/#loops): item in array (`each="{ item in items }"`); key, value in object (`each="{ key, value in items }"`) and a shorthand (`each="{ items }"`) notation. This shorthand can lead to confusion. Therefore you should **use the `each ... in` syntax**.
+Riot supports multiple notations for [loops](http://riot.js.org/guide/#loops): item in array (`each="{ item in items }"`); key, value in object (`each="{ key, value in items }"`) and a shorthand (`each="{ items }"`) notation. This shorthand can lead to confusion. Therefore you should **use the `each ... in` syntax**.
 
 ### Why?
 
@@ -629,7 +629,7 @@ Use `each="{ item in items }"` or `each="{ key, value in items }"` instead of `e
 
 ## Put styles in external files
 
-For developer convenience, Riot allows you to define a tag element's style in a [nested `<style>` tag](http://riotjs.com/guide/#tag-styling). While you can [scope](http://riotjs.com/guide/#scoped-css) these styles to the tag element, Riot does not provide true encapsulation. Instead Riot extracts these styles from the tags (JavaScript) and injects them into the document on runtime. Since Riot compiles nested styles to JavaScript and doesn't have true encapsulation, you should instead **put styles in external files**.
+For developer convenience, Riot allows you to define a tag element's style in a [nested `<style>` tag](http://riot.js.org/guide/#tag-styling). While you can [scope](http://riot.js.org/guide/#scoped-css) these styles to the tag element, Riot does not provide true encapsulation. Instead Riot extracts these styles from the tags (JavaScript) and injects them into the document on runtime. Since Riot compiles nested styles to JavaScript and doesn't have true encapsulation, you should instead **put styles in external files**.
 
 ### Why?
 
@@ -677,7 +677,7 @@ my-example li { }
 .my-parent .my-example { } /* .my-parent is outside scope, so should not be used in this file */
 ```
 
-note: If you're using [`data-is=`](http://riotjs.com/guide/#html-elements-as-tags) (introduced in [v2.3.17](http://riotjs.com/release-notes/#march-9-2016)) to initiate Riot tags, you can use `[data-is="my-example"]` as CSS selector instead of `.my-example`.
+note: If you're using [`data-is=`](http://riot.js.org/guide/#html-elements-as-tags) (introduced in [v2.3.17](http://riot.js.org/release-notes/#march-9-2016)) to initiate Riot tags, you can use `[data-is="my-example"]` as CSS selector instead of `.my-example`.
 
 
 [↑ back to Table of Contents](#table-of-contents)
