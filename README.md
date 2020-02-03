@@ -26,7 +26,6 @@ note: The target version is limited to 4 or more.
 * [Tag module names](#tag-module-names)
 * [1 module = 1 directory](#1-module--1-directory)
 * [Use `*.tag.html` extension](#use-taghtml-extension)
-* [Use `<script>` inside tag](#use-script-inside-tag)
 * [Keep tag expressions simple](#keep-tag-expressions-simple)
 * [Keep tag options primitive](#keep-tag-options-primitive)
 * [Harness your tag options](#harness-your-tag-options)
@@ -170,40 +169,6 @@ riot --ext tag.html modules/ dist/tags.js
 In case you're using the [Webpack tag loader](https://github.com/srackham/tag-loader), [configure the loader](http://webpack.github.io/docs/using-loaders.html#configuration) to match the extension:
 ```javascript
 { test: /\.tag.html$/, loader: 'tag' }
-```
-
-[↑ back to Table of Contents](#table-of-contents)
-
-
-## Use `<script>` inside tag
-
-While Riot supports writing JavaScript inside a tag element [without a `<script>`](http://riot.js.org/guide/#no-script-tag),
-you should **always use `<script>`** around scripting. This is closer to web standards and prevents confusing developers and IDEs.
-
-### Why?
-
-* Prevents markup being interpreted as script.
-* Improves IDE support (signals how to interpret).
-* Tells developers where markup stops and scripting starts.
-
-### How?
-
-```html
-<!-- recommended -->
-<my-example>
-	<h1>The year is { this.year }</h1>
-
-	<script>
-		this.year = (new Date()).getUTCFullYear();
-	</script>
-</my-example>
-
-<!-- avoid -->
-<my-example>
-	<h1>The year is { this.year }</h1>
-
-	this.year = (new Date()).getUTCFullYear();
-</my-example>
 ```
 
 [↑ back to Table of Contents](#table-of-contents)
