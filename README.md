@@ -25,7 +25,7 @@ note: The target version is limited to 4 or more.
 * [Module based development](#module-based-development)
 * [Tag module names](#tag-module-names)
 * [1 module = 1 directory](#1-module--1-directory)
-* [Use `*.tag.html` extension](#use-taghtml-extension)
+* [Use `*.riot.html` extension](#use-taghtml-extension)
 * [Use `<script>` inside tag](#use-script-inside-tag)
 * [Keep tag expressions simple](#keep-tag-expressions-simple)
 * [Keep tag options primitive](#keep-tag-options-primitive)
@@ -123,8 +123,8 @@ The file extension depends on the purpose of the file.
 ```
 modules/
 └── my-example/
-    ├── my-example.tag.html
-    ├── my-example.less
+    ├── my-example.riot.html
+    ├── my-example.scss
     ├── ...
     └── README.md
 ```
@@ -135,21 +135,21 @@ For example a generic `radio-group` module may be placed directly inside "module
 ```
 modules/
 ├── radio-group/
-|   └── radio-group.tag.html
+|   └── radio-group.riot
 └── search-form/
-    ├── search-form.tag.html
+    ├── search-form.riot
     ├── ...
     └── search-filters/
-        └── search-filters.tag.html
+        └── search-filters.riot
 ```
 
 [↑ back to Table of Contents](#table-of-contents)
 
 
-## Use `*.tag.html` extension
+## Use `*.riot.html` extension
 
-Riot introduces a new concept called *tags*, and suggests to use a `*.tag` extension.
-However in essence these tags are simply custom elements containing markup. Therefore you should **use the `*.tag.html` extension**.
+Riot introduces a new concept called *tags*, and suggests to use a `*.riot` extension.
+However in essence these tags are simply custom elements containing markup. Therefore you should **use the `*.riot.html` extension**.
 
 ### Why?
 
@@ -160,7 +160,7 @@ However in essence these tags are simply custom elements containing markup. Ther
 
 In case of [in-browser compilation](http://riot.js.org/guide/compiler/#in-browser-compilation):
 ```html
-<script src="path/to/modules/my-example/my-example.tag.html" type="riot/tag"></script>
+<script src="path/to/modules/my-example/my-example.riot.html" type="riot/tag"></script>
 ```
 
 In case of [pre-compilation](http://riot.js.org/guide/compiler/#pre-compilation), set the [custom extension](http://riot.js.org/guide/compiler/#custom-extension):
@@ -170,7 +170,7 @@ riot --ext tag.html modules/ dist/tags.js
 
 In case you're using the [Webpack tag loader](https://github.com/srackham/tag-loader), [configure the loader](http://webpack.github.io/docs/using-loaders.html#configuration) to match the extension:
 ```javascript
-{ test: /\.tag.html$/, loader: 'tag' }
+{ test: /\.riot.html$/, loader: 'tag' }
 ```
 
 [↑ back to Table of Contents](#table-of-contents)
@@ -644,7 +644,7 @@ Styles related to the tag and its markup, should be placed in a separate stylesh
 
 ```
 my-example/
-├── my-example.tag.html
+├── my-example.riot.html
 ├── my-example.(css|less|scss)    <-- external stylesheet next to tag file
 └── ...
 ```
@@ -700,8 +700,8 @@ Add a `README.md` file to the tag's module directory:
 
 ```
 range-slider/
-├── range-slider.tag.html
-├── range-slider.less
+├── range-slider.riot.html
+├── range-slider.scss
 └── README.md
 ```
 
@@ -751,7 +751,7 @@ Add a `*.demo.html` file to your module directory:
 
 ```
 city-map/
-├── city-map.tag.html
+├── city-map.riot.html
 ├── city-map.demo.html
 ├── city-map.css
 └── ...
@@ -760,7 +760,7 @@ city-map/
 Inside the demo file:
 
 * Include `riot+compiler.min.js` to also compile during runtime.
-* Include the tag file (e.g. `./city-map.tag.html`).
+* Include the tag file (e.g. `./city-map.riot.html`).
 * Create a `demo` tag (`<yield/>`) to embed your demos in (otherwise option attributes are not supported).
 * Write demos inside the `<demo>` tags.
 * As a bonus add `aria-label`s to the `<demo>` tags and style those as title bars.
@@ -784,9 +784,9 @@ Example demo file in `city-tag` module:
     <link rel="stylesheet" href="./city-map.css">
 
     <script src="path/to/riot+compiler.min.js"></script>
-    <script type="riot/tag" src="./city-map.tag.html"></script>
+    <script type="riot/tag" src="./city-map.riot.html"></script>
     <script>
-        riot.tag('demo','<yield/>');
+        riot.riot('demo','<yield/>');
         riot.mount('demo', {});
     </script>
 
@@ -818,7 +818,7 @@ Linters improve code consistency and help trace syntax errors. With some extra c
 
 ### How?
 
-To allow linters to extract the scripts from your `*.tag.html` files, [put script inside a `<script>` tag](#use-script-inside-tag) and [keep tag expressions simple](#keep-tag-expressions-simple) (as linters don't understand those). Configure your linter to allow global variables `riot` and tag `opts`.
+To allow linters to extract the scripts from your `*.riot.html` files, [put script inside a `<script>` tag](#use-script-inside-tag) and [keep tag expressions simple](#keep-tag-expressions-simple) (as linters don't understand those). Configure your linter to allow global variables `riot` and tag `opts`.
 
 #### ESLint
 
@@ -841,7 +841,7 @@ Configure ESLint in `modules/.eslintrc` (so IDEs can interpret it as well):
 
 Run ESLint
 ```bash
-eslint modules/**/*.tag.html
+eslint modules/**/*.riot.html
 ```
 
 #### JSHint
@@ -868,7 +868,6 @@ Note: JSHint does not accept `tag.html` as extension, but only `html`.
 ## Add badge to your project
 
 You can use the *RiotJS Style Guide badge* to link to this guide:
-
 [![RiotJS Style Guide badge](https://github.com/k-kuwahara/riotjs-style-guide/blob/master/riotjs-style-guide.svg)](https://github.com/k-kuwahara/riotjs-style-guide)
 
 ### Why?
