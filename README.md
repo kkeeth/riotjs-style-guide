@@ -26,15 +26,12 @@ note: The target version is limited to 4 or more.
 * [Tag module names](#tag-module-names)
 * [1 module = 1 directory](#1-module--1-directory)
 * [Use `*.riot.html` extension](#use-taghtml-extension)
-* [Use `<script>` inside tag](#use-script-inside-tag)
 * [Keep tag expressions simple](#keep-tag-expressions-simple)
 * [Keep tag options primitive](#keep-tag-options-primitive)
 * [Harness your tag options](#harness-your-tag-options)
 * [Assign `this` to `tag`](#assign-this-to-tag)
 * [Put tag properties and methods on top](#put-tag-properties-and-methods-on-top)
 * [Avoid fake ES6 syntax](#avoid-fake-es6-syntax)
-* [Avoid `tag.parent`](#avoid-tagparent)
-* [Use `each ... in` syntax](#use-each--in-syntax)
 * [Put styles in external files](#put-styles-in-external-files)
 * [Use tag name as style scope](#use-tag-name-as-style-scope)
 * [Document your tag API](#document-your-tag-api)
@@ -171,40 +168,6 @@ riot --ext tag.html modules/ dist/tags.js
 In case you're using the [Webpack tag loader](https://github.com/srackham/tag-loader), [configure the loader](http://webpack.github.io/docs/using-loaders.html#configuration) to match the extension:
 ```javascript
 { test: /\.riot.html$/, loader: 'tag' }
-```
-
-[↑ back to Table of Contents](#table-of-contents)
-
-
-## Use `<script>` inside tag
-
-While Riot supports writing JavaScript inside a tag element [without a `<script>`](http://riot.js.org/guide/#no-script-tag),
-you should **always use `<script>`** around scripting. This is closer to web standards and prevents confusing developers and IDEs.
-
-### Why?
-
-* Prevents markup being interpreted as script.
-* Improves IDE support (signals how to interpret).
-* Tells developers where markup stops and scripting starts.
-
-### How?
-
-```html
-<!-- recommended -->
-<my-example>
-	<h1>The year is { this.year }</h1>
-
-	<script>
-		this.year = (new Date()).getUTCFullYear();
-	</script>
-</my-example>
-
-<!-- avoid -->
-<my-example>
-	<h1>The year is { this.year }</h1>
-
-	this.year = (new Date()).getUTCFullYear();
-</my-example>
 ```
 
 [↑ back to Table of Contents](#table-of-contents)
@@ -507,121 +470,6 @@ add() {
 
 ```bash
 riot --type none
-```
-
-[↑ back to Table of Contents](#table-of-contents)
-
-
-## Avoid `tag.parent`
-
-Riot supports [nested tags](http://riot.js.org/guide/#nested-tags) which have access to their parent context through `tag.parent`. Accessing context outside your tag module violates the [FIRST](https://addyosmani.com/first/) rule of [module based development](#module-based-development). Therefore you should **avoid using `tag.parent`**.
-
-The exception to this rule are anonymous child tags in a [for each loop](http://riot.js.org/guide/#loops) as they are defined directly inside the tag module.
-
-### Why?
-
-* A tag module, like any module, must work in isolation. If a tag needs to access its parent, this rule is broken.
-* If a tag needs access to its parent, it can no longer be reused in a different context.
-* By accessing its parent a child tag can modify properties on its parent. This can lead to unexpected behaviour.
-
-### How?
-
-* Pass values from the parent to the child tag using attribute expressions.
-* Pass methods defined on the parent tag to the child tag using callbacks in attribute expressions.
-
-```html
-<!-- recommended -->
-<parent-tag>
-	<child-tag value="{ value }" /> <!-- pass parent value to child -->
-</parent-tag>
-
-<child-tag>
-	<span>{ opts.value }</span> <!-- use value passed by parent -->
-</child-tag>
-
-<!-- avoid -->
-<parent-tag>
-	<child-tag />
-</parent-tag>
-
-<child-tag>
-	<span>value: { parent.value }</span> <!-- don't do this -->
-</child-tag>
-```
-```html
-<!-- recommended -->
-<parent-tag>
-	<child-tag on-event="{ methodToCallOnEvent }" /> <!-- use method as callback -->
-	<script>this.methodToCallOnEvent = () => { /*...*/ };</script>
-<parent-tag>
-
-<child-tag>
-	<button onclick="{ opts.onEvent }"></button> <!-- call method passed by parent -->
-</child-tag>
-
-<!-- avoid -->
-<parent-tag>
-	<child-tag />
-	<script>this.methodToCallOnEvent = () => { /*...*/ };</script>
-<parent-tag>
-
-<child-tag>
-	<button onclick="{ parent.methodToCallOnEvent }"></button> <!-- don't do this -->
-</child-tag>
-```
-```html
-<!-- allowed exception -->
-<parent-tag>
-	<button each="{ item in items }"
-		onclick="{ parent.onEvent }"> <!-- okay, because button is not a riot tag -->
-		{ item.text }
-	</button>
-	<script>this.onEvent = (e) => { alert(e.item.text); }</script>
-</parent-tag>
-```
-
-[↑ back to Table of Contents](#table-of-contents)
-
-
-## Use `each ... in` syntax
-
-Riot supports multiple notations for [loops](http://riot.js.org/guide/#loops): item in array (`each="{ item in items }"`); key, value in object (`each="{ key, value in items }"`) and a shorthand (`each="{ items }"`) notation. This shorthand can lead to confusion. Therefore you should **use the `each ... in` syntax**.
-
-### Why?
-
-Riot creates a new tag instance for each item the `each` directive loops through. When using the shorthand notation, the methods and properties of the current item are bound to the current tag instance (local `this`). This is not obvious when looking at the markup and may thus confuse other developers. Therefore you should **use the `each ... in` syntax**.
-
-### How?
-
-Use `each="{ item in items }"` or `each="{ key, value in items }"` instead of `each="{ items }"` syntax:
-
-```html
-<!-- recommended: -->
-<ul>
-    <li each="{ item in items }">
-      	<label class="{ completed: item.done }">
-			<input type="checkbox" checked="{ item.done }"> { item.title }
-      	</label>
-    </li>
-</ul>
-
-<!-- recommended: -->
-<ul>
-    <li each="{ key, item in items }">
-      	<label class="{ completed: item.done }">
-			<input type="checkbox" checked="{ item.done }"> { key }. { item.title }
-      	</label>
-    </li>
-</ul>
-
-<!-- avoid: -->
-<ul>
-    <li each="{ items }">
-      	<label class="{ completed: done }">
-			<input type="checkbox" checked="{ done }"> { title }
-      	</label>
-    </li>
-</ul>
 ```
 
 [↑ back to Table of Contents](#table-of-contents)
