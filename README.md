@@ -14,7 +14,7 @@ This guide provides a uniform way to structure your [RiotJS](https://riot.js.org
 * easier to (re)use build tools you already use.
 * easier to cache and serve bundles of code separately.
 
-This guide is inspired by the [AngularJS Style Guide](https://github.com/johnpapa/angular-styleguide) by John Papa.
+This guide is inspired by the [AngularJS Style Guide](https://github.com/johnpapa/angular-styleguide) by John Papa. And also, this guide is based by the [RiotJS Style Guide](https://github.com/voorhoede/riotjs-style-guide) by [De Voorhoede Company](https://www.voorhoede.nl/nl/).
 
 note: The target version is limited to 4 or more.
 
@@ -25,7 +25,7 @@ note: The target version is limited to 4 or more.
 * [Module based development](#module-based-development)
 * [Tag module names](#tag-module-names)
 * [1 module = 1 directory](#1-module--1-directory)
-* [Use `*.riot` or `*.riot.html` extension](#use-riothtml-extension)
+* [Use `*.riot` or `*.riot.html` extension](#use-riot-or-riothtml-extension)
 * [Keep tag expressions simple](#keep-tag-expressions-simple)
 * [Keep tag options primitive](#keep-tag-options-primitive)
 * [Harness your tag options](#harness-your-tag-options)
