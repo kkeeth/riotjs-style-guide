@@ -2,12 +2,12 @@
 
 Opinionated *RiotJS Style Guide* for all developers.
 
-[![RiotJS Style Guide badge](https://github.com/k-kuwahara/riotjs-style-guide/blob/master/riotjs-style-guide.svg)](https://github.com/k-kuwahara/riotjs-style-guide)
+[![RiotJS Style Guide badge](https://github.com/kkeeth/riotjs-style-guide/blob/master/riotjs-style-guide.svg)](https://github.com/kkeeth/riotjs-style-guide)
 
 
 ## Purpose
 
-This guide provides a uniform way to structure your [RiotJS](http://riot.js.org/) code. Making it
+This guide provides a uniform way to structure your [RiotJS](https://riot.js.org/) code. Making it
 
 * easier for developers / team members to understand and find things.
 * easier for IDEs to interpret the code and provide assistance.
@@ -58,7 +58,7 @@ If your module does too much or gets too big, split it up into smaller modules w
 As a rule of thumb, try to keep each tag file less than 100 lines of code.
 Also ensure your tag module works in isolation. For instance by adding a stand-alone demo.
 
-**Tip**: If you use an [AMD](https://github.com/amdjs/amdjs-api/blob/master/AMD.md) or CommonJS module loader, you need to [compile your tags using the `--modular` (`-m`) flag](http://riot.js.org/guide/compiler/#amd-and-commonjs):
+**Tip**: If you use an [AMD](https://github.com/amdjs/amdjs-api/blob/master/AMD.md) or CommonJS module loader, you need to [compile your tags using the `--modular` (`-m`) flag](https://riot.js.org/compiler/#amd-and-commonjs):
 ```bash
 # enable AMD and CommonJS
 riot --modular
@@ -120,7 +120,7 @@ The file extension depends on the purpose of the file.
 ```
 modules/
 └── my-example/
-    ├── my-example.riot.html
+    ├── my-example.riot
     ├── my-example.scss
     ├── ...
     └── README.md
@@ -170,9 +170,20 @@ In case of [pre-compilation](https://riot.js.org/compiler/#pre-compilation), set
 riot --extionsion html modules/
 ```
 
-In case you're using the [Webpack tag loader](https://github.com/srackham/tag-loader), [configure the loader](http://webpack.github.io/docs/using-loaders.html#configuration) to match the extension:
+In case you're using the [riot webpack loader](https://github.com/riot/webpack-loader), [configure the loader](http://webpack.github.io/docs/using-loaders.html#configuration) to match the extension:
 ```javascript
-{ test: /\.riot.html$/, loader: 'tag' }
+{
+  test: /\.riot$/,
+  exclude: /node_modules/,
+  use: [{
+      loader: '@riotjs/webpack-loader',
+      options: {
+      hot: false, // set it to true if you are using hmr
+      // add here all the other @riotjs/compiler options riot.js.org/compiler
+      // template: 'pug' for example
+      }
+  }]
+}
 ```
 
 [↑ back to Table of Contents](#table-of-contents)
@@ -180,7 +191,7 @@ In case you're using the [Webpack tag loader](https://github.com/srackham/tag-lo
 
 ## Keep tag expressions simple
 
-Riot's inline [expressions](http://riot.js.org/guide/#expressions) are 100% Javascript. This makes them extemely powerful, but potentially also very complex. Therefore you should **keep tag expressions simple**.
+Riot's inline [expressions](https://riot.js.org/#expressions) are 100% Javascript. This makes them extemely powerful, but potentially also very complex. Therefore you should **keep tag expressions simple**.
 
 ### Why?
 
@@ -280,7 +291,7 @@ Harnessing your tag options ensures your tag will always function (defensive pro
 * Use type conversion to cast option values to expected type.
 * Check if option exists before using it.
 
-For instance [Riot's `<todo>` example](http://riot.js.org/guide/#example) could be improved to also work if no `items` are provided, by using a default:
+For instance [Riot's `<todo>` example](https://riot.js.org/documentation/#todo-example) could be improved to also work if no `items` are provided, by using a default:
 
 ```javascript
 this.items = opts.items || []; // default to empty list
@@ -291,7 +302,7 @@ Ensuring different use cases all work:
 <todo> <!-- uses empty list -->
 ```
 
-The `<range-slider>` in [keep tag options primitive](https://github.com/k-kuwahara/riotjs-style-guide#keep-tag-options-primitive) expects numbers for `min`, `max` and `step`. Use type conversion:
+The `<range-slider>` in [keep tag options primitive](https://github.com/kkeeth/riotjs-style-guide#keep-tag-options-primitive) expects numbers for `min`, `max` and `step`. Use type conversion:
 
 ```javascript
 // if step option is valid, use as number otherwise default to one.
@@ -325,12 +336,12 @@ Ensuring different use cases all work:
 
 ## Assign `this` to `tag`
 
-Within the context of a Riot tag element, `this` is bound to the [tag instance](http://riot.js.org/api/#tag-instance).
+Within the context of a Riot tag element, `this` is bound to the [tag instance](https://riot.js.org/api/#tag-instance).
 Therefore when you need to reference it in a different context, ensure `this` is available as `tag`.
 
 ### Why?
 
-* By assigning `this` to a variable named `tag` the variable tells developers it's bound to the [tag instance](http://riot.js.org/api/#tag-instance) wherever it's used.
+* By assigning `this` to a variable named `tag` the variable tells developers it's bound to the [tag instance](https://riot.js.org/api/#tag-instance) wherever it's used.
 
 ### How?
 
@@ -435,7 +446,7 @@ tag.on('update', onUpdate);
 
 ## Avoid fake ES6 syntax
 
-Riot supports a [shorthand *ES6 like* method syntax](http://riot.js.org/guide/#tag-syntax). Riot compiles the shorthand syntax `methodName() { }` into `this.methodName = function() {}.bind(this)`. Since this is non-standard you should **avoid fake ES6 method shorthand syntax**.
+Riot supports a [shorthand *ES6 like* method syntax](https://riot.js.org/#tag-syntax). Riot compiles the shorthand syntax `methodName() { }` into `this.methodName = function() {}.bind(this)`. Since this is non-standard you should **avoid fake ES6 method shorthand syntax**.
 
 ### Why?
 
@@ -471,7 +482,7 @@ add() {
 }
 ```
 
-**Tip**: [Disable transformation of the fake ES6 syntax](http://riot.js.org/guide/compiler/#no-transformation) during pre-compilation by setting `type` to `none`:
+**Tip**: [Disable transformation of the fake ES6 syntax](https://riot.js.org/compiler/#no-transformation) during pre-compilation by setting `type` to `none`:
 
 ```bash
 riot --type none
@@ -482,7 +493,7 @@ riot --type none
 
 ## Put styles in external files
 
-For developer convenience, Riot allows you to define a tag element's style in a [nested `<style>` tag](http://riot.js.org/guide/#tag-styling). While you can [scope](http://riot.js.org/guide/#scoped-css) these styles to the tag element, Riot does not provide true encapsulation. Instead Riot extracts these styles from the tags (JavaScript) and injects them into the document on runtime. Since Riot compiles nested styles to JavaScript and doesn't have true encapsulation, you should instead **put styles in external files**.
+For developer convenience, Riot allows you to define a tag element's style in a [nested `<style>` tag](https://riot.js.org/documentation/#styling). While you can [scope](https://riot.js.org/documentation/#scoped-css) these styles to the tag element, Riot does not provide true encapsulation. Instead Riot extracts these styles from the tags (JavaScript) and injects them into the document on runtime. Since Riot compiles nested styles to JavaScript and doesn't have true encapsulation, you should instead **put styles in external files**.
 
 ### Why?
 
@@ -497,7 +508,7 @@ Styles related to the tag and its markup, should be placed in a separate stylesh
 
 ```
 my-example/
-├── my-example.riot.html
+├── my-example.riot
 ├── my-example.(css|less|scss)    <-- external stylesheet next to tag file
 └── ...
 ```
@@ -530,7 +541,7 @@ my-example li { }
 .my-parent .my-example { } /* .my-parent is outside scope, so should not be used in this file */
 ```
 
-note: If you're using [`data-is=`](http://riot.js.org/guide/#html-elements-as-tags) (introduced in [v2.3.17](http://riot.js.org/release-notes/#march-9-2016)) to initiate Riot tags, you can use `[data-is="my-example"]` as CSS selector instead of `.my-example`.
+note: If you're using [`data-is=`](https://riot.js.org/#html-elements-as-tags) (introduced in [v2.3.17](https://riot.js.org/release-notes/#march-9-2016)) to initiate Riot tags, you can use `[data-is="my-example"]` as CSS selector instead of `.my-example`.
 
 
 [↑ back to Table of Contents](#table-of-contents)
@@ -553,7 +564,7 @@ Add a `README.md` file to the tag's module directory:
 
 ```
 range-slider/
-├── range-slider.riot.html
+├── range-slider.riot
 ├── range-slider.scss
 └── README.md
 ```
@@ -604,7 +615,7 @@ Add a `*.demo.html` file to your module directory:
 
 ```
 city-map/
-├── city-map.riot.html
+├── city-map.riot
 ├── city-map.demo.html
 ├── city-map.css
 └── ...
@@ -613,7 +624,7 @@ city-map/
 Inside the demo file:
 
 * Include `riot+compiler.min.js` to also compile during runtime.
-* Include the tag file (e.g. `./city-map.riot.html`).
+* Include the tag file (e.g. `./city-map.riot`).
 * Create a `demo` tag (`<yield/>`) to embed your demos in (otherwise option attributes are not supported).
 * Write demos inside the `<demo>` tags.
 * As a bonus add `aria-label`s to the `<demo>` tags and style those as title bars.
@@ -637,7 +648,7 @@ Example demo file in `city-tag` module:
     <link rel="stylesheet" href="./city-map.css">
 
     <script src="path/to/riot+compiler.min.js"></script>
-    <script type="riot/tag" src="./city-map.riot.html"></script>
+    <script type="riot" src="./city-map.riot"></script>
     <script>
         riot.riot('demo','<yield/>');
         riot.mount('demo', {});
@@ -671,7 +682,7 @@ Linters improve code consistency and help trace syntax errors. With some extra c
 
 ### How?
 
-To allow linters to extract the scripts from your `*.riot.html` files, [put script inside a `<script>` tag](#use-script-inside-tag) and [keep tag expressions simple](#keep-tag-expressions-simple) (as linters don't understand those). Configure your linter to allow global variables `riot` and tag `opts`.
+To allow linters to extract the scripts from your `*.riot` files, [put script inside a `<script>` tag](#use-script-inside-tag) and [keep tag expressions simple](#keep-tag-expressions-simple) (as linters don't understand those). Configure your linter to allow global variables `riot` and tag `opts`.
 
 #### ESLint
 
@@ -694,7 +705,7 @@ Configure ESLint in `modules/.eslintrc` (so IDEs can interpret it as well):
 
 Run ESLint
 ```bash
-eslint modules/**/*.riot.html
+eslint modules/**/*.riot
 ```
 
 #### JSHint
@@ -721,7 +732,7 @@ Note: JSHint does not accept `tag.html` as extension, but only `html`.
 ## Add badge to your project
 
 You can use the *RiotJS Style Guide badge* to link to this guide:
-[![RiotJS Style Guide badge](https://github.com/k-kuwahara/riotjs-style-guide/blob/master/riotjs-style-guide.svg)](https://github.com/k-kuwahara/riotjs-style-guide)
+[![RiotJS Style Guide badge](https://github.com/kkeeth/riotjs-style-guide/blob/master/riotjs-style-guide.svg)](https://github.com/kkeeth/riotjs-style-guide)
 
 ### Why?
 
@@ -732,15 +743,15 @@ Inform other developers your project is following the RiotJS Style Guide. And le
 Include the badge in your project. In markdown:
 
 ```markdown
-[![RiotJS Style Guide badge](https://github.com/k-kuwahara/riotjs-style-guide/blob/master/riotjs-style-guide.svg)](https://github.com/k-kuwahara/riotjs-style-guide)
+[![RiotJS Style Guide badge](https://github.com/kkeeth/riotjs-style-guide/blob/master/riotjs-style-guide.svg)](https://github.com/kkeeth/riotjs-style-guide)
 ```
 
 Or html:
 
 ```html
-<a href="https://github.com/k-kuwahara/riotjs-style-guide">
+<a href="https://github.com/kkeeth/riotjs-style-guide">
     <img alt="RiotJS Style Guide badge"
-        src="https://github.com/k-kuwahara/riotjs-style-guide/blob/master/riotjs-style-guide.svg">
+        src="https://github.com/kkeeth/riotjs-style-guide/blob/master/riotjs-style-guide.svg">
 </a>
 ```
 
@@ -752,6 +763,6 @@ Or html:
 
 [![CC0](http://mirrors.creativecommons.org/presskit/buttons/88x31/svg/cc-zero.svg)](https://creativecommons.org/publicdomain/zero/1.0/)
 
-[k-kuwahara](https://twitter.com/dek-kuwahara) waives all rights to this work worldwide under copyright law, including all related and neighboring rights, to the extent allowed by law.
+[kkeeth](https://twitter.com/dekkeeth) waives all rights to this work worldwide under copyright law, including all related and neighboring rights, to the extent allowed by law.
 
 You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission.
