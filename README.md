@@ -25,7 +25,7 @@ note: The target version is limited to 4 or more.
 * [Module based development](#module-based-development)
 * [Tag module names](#tag-module-names)
 * [1 module = 1 directory](#1-module--1-directory)
-* [Use `*.riot.html` extension](#use-taghtml-extension)
+* [Use `*.riot` or `*.riot.html` extension](#use-riothtml-extension)
 * [Keep tag expressions simple](#keep-tag-expressions-simple)
 * [Keep tag options primitive](#keep-tag-options-primitive)
 * [Harness your tag options](#harness-your-tag-options)
@@ -143,10 +143,11 @@ modules/
 [↑ back to Table of Contents](#table-of-contents)
 
 
-## Use `*.riot.html` extension
+## Use `*.riot` or `*.riot.html` extension
 
-Riot introduces a new concept called *tags*, and suggests to use a `*.riot` extension.
-However in essence these tags are simply custom elements containing markup. Therefore you should **use the `*.riot.html` extension**.
+Riot introduces a new concept called *tags*, and suggests to use a `*.riot` extension. In addition, the GitHub officially supports the `*.riot` extension. Therefore you should **use the `*.riot` extension**.
+
+However in essence these tags are simply custom elements containing markup. Also, many editors don't yet support the `*.riot` extension. Therefore, it maybe better to consider **using the `*.riot.html` extension**.
 
 ### Why?
 
@@ -155,14 +156,18 @@ However in essence these tags are simply custom elements containing markup. Ther
 
 ### How?
 
-In case of [in-browser compilation](http://riot.js.org/guide/compiler/#in-browser-compilation):
+In case of [in-browser compilation](https://riot.js.org/compiler/#in-browser-compilation):
 ```html
-<script src="path/to/modules/my-example/my-example.riot.html" type="riot/tag"></script>
+<script src="path/to/modules/my-example/my-example.riot" type="riot"></script>
+
+or
+
+<script src="path/to/modules/my-example/my-example.riot.html" type="riot"></script>
 ```
 
-In case of [pre-compilation](http://riot.js.org/guide/compiler/#pre-compilation), set the [custom extension](http://riot.js.org/guide/compiler/#custom-extension):
+In case of [pre-compilation](https://riot.js.org/compiler/#pre-compilation), set the [custom extension](https://riot.js.org/compiler/#custom-extension):
 ```bash
-riot --ext tag.html modules/ dist/tags.js
+riot --extionsion html modules/
 ```
 
 In case you're using the [Webpack tag loader](https://github.com/srackham/tag-loader), [configure the loader](http://webpack.github.io/docs/using-loaders.html#configuration) to match the extension:
